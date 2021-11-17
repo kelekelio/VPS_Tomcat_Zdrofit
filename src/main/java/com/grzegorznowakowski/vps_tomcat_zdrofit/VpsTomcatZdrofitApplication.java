@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class VpsTomcatBaseApplication extends SpringBootServletInitializer {
+public class VpsTomcatZdrofitApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(VpsTomcatBaseApplication.class, args);
+        SpringApplication.run(VpsTomcatZdrofitApplication.class, args);
     }
 
 }
