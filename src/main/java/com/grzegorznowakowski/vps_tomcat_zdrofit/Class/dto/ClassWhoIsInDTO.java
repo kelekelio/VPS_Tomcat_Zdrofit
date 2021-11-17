@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 public class ClassWhoIsInDTO {
     private Long id;
 
-    private Object firstName;
+    private String firstName;
 
     private String nickName;
 
@@ -34,7 +34,7 @@ public class ClassWhoIsInDTO {
     private boolean isDeleted;
 
     public ClassWhoIsInDTO(@JsonProperty("id") Long id,
-                           @JsonProperty("firstName") Object firstName,
+                           @JsonProperty("firstName") String firstName,
                            @JsonProperty("nickName") String nickName,
                            @JsonProperty("lastName") String lastName,
                            @JsonProperty("photoUrl") String photoUrl,

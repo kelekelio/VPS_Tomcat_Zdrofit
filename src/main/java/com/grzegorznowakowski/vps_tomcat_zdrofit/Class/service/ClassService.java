@@ -51,7 +51,7 @@ public class ClassService {
         System.out.println(whoIsIn.getId() + " => " + whoIsIn.getLastName());
         ClassWhoIsIn registeredClassMember = ClassWhoIsIn.builder()
                 .id(whoIsIn.getId())
-                .firstName(String.valueOf(whoIsIn.getFirstName()))
+                .firstName(whoIsIn.getFirstName())
                 .nickName(whoIsIn.getNickName())
                 .lastName(whoIsIn.getLastName())
                 .photoUrl(whoIsIn.getPhotoUrl())
