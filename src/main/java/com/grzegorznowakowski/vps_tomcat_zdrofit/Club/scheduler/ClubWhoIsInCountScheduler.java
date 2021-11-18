@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 public class ClubWhoIsInCountScheduler {
     private final ClubWhoIsInCountService clubWhoIsInCountService;
 
-    @Value("${schedule.download-every-10-min.enable}")
+    @Value("${schedule.download-every-30-min.enable}")
     private boolean isSchedulerEnabled;
 
-    @Scheduled(cron = "${schedule.download-every-10-min.cron}")
+    @Scheduled(cron = "${schedule.download-every-30-min.cron}")
     public void downloadWhoIsInCount() {
         if (isSchedulerEnabled) {
             log.info("Downloading current number of members in each club at {}", LocalDateTime.now());
