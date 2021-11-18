@@ -5,6 +5,7 @@ import com.grzegorznowakowski.vps_tomcat_zdrofit.Class.dto.ClassWhoIsInResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Class.entity.ClassWhoIsIn;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Class.repository.ClassWhoIsInRepository;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.config.ZdrofitAPI;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.dto.MonikaDTO;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.utils.HttpUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +64,10 @@ public class ClassService {
                 .isDeleted(whoIsIn.isDeleted())
                 .build();
         classWhoIsInRepository.save(registeredClassMember);
+    }
+
+    public MonikaDTO getMonika() {
+        return MonikaDTO.create(classWhoIsInRepository.findMonika());
     }
 
 }
