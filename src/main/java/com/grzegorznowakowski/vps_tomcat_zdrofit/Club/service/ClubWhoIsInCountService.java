@@ -60,6 +60,6 @@ public class ClubWhoIsInCountService {
                 .build();
         System.out.println(logWhoIsIn.getClubId() + " => " + whoIsInCount.getCount());
 
-        //clubWhoIsInCountRepository.save(logWhoIsIn);
+        clubWhoIsInCountRepository.save(logWhoIsIn);
     }
 }
