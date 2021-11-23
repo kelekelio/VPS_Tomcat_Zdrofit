@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 public class ClassWhoIsInScheduler {
     private final ClassService classService;
 
-    @Value("${schedule.download-once-a-day.enable}")
+    @Value("${schedule.download-every-2-h.enable}")
     private boolean isEnabled;
 
     //todo: change cron to once a day schedule.download-once-a-day.cron
-    @Scheduled(cron = "${schedule.download-once-a-day.cron}")
+    @Scheduled(cron = "${schedule.download-every-2-h.cron}")
     public void logClassWhoIsInData() {
         if (isEnabled) {
             log.info("Logging members registered for classes at {}", LocalDateTime.now());
