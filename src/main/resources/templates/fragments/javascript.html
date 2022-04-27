@@ -12,6 +12,7 @@
     <script th:src="@{/js/bootnavbar.js}"></script>
     <script th:src="@{/js/jquery.dataTables.js}"></script>
     <script th:src="@{/js/tooltipster.bundle.js}"></script>
+    <script th:src="@{/js/canvasjs.min.js}"></script>
     <script>
         function flatten(params) {
             params.columns.forEach(function (column, index) {
@@ -209,6 +210,58 @@
                 ]
             });
         });
+
+        function getDots() {
+            let yourDate = new Date();
+
+            let dots = [];
+            let url = 'http://localhost:8080/api/clubs/WhoIsInCount/709/' + yourDate.toISOString().split('T')[0];
+
+            fetch(url)
+                .then(res => res.json())
+                .then((data) => {
+                    for (let i = 0; i < data.length; i++) {
+                        data[i]['x'] = new Date(data[i]['x']);
+                        dots.push(data);
+                    }
+                    draw(data);
+                })
+                .catch(err => { throw err });
+
+        }
+
+        $('#chartContainer').each(function() {
+            getDots();
+        });
+
+
+        function draw(dots) {
+            console.log(dots);
+
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title:{
+                    text: "Club 709 Daily Load"
+                },
+                axisY: {
+                    title: "People",
+                    valueFormatString: "",
+                    suffix: "",
+                    prefix: ""
+                },
+                data: [{
+                    type: "splineArea",
+                    color: "rgba(54,158,173,.7)",
+                    markerSize: 5,
+                    xValueFormatString: "YYYY",
+                    yValueFormatString: "#,##0.##",
+                    dataPoints: dots
+                }]
+            });
+            chart.render();
+
+        }
 
 
     </script>

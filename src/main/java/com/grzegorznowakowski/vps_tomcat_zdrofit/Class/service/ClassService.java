@@ -62,9 +62,7 @@ public class ClassService {
                 .timestamp(whoIsIn.getTimestamp())
                 .isDeleted(whoIsIn.isDeleted())
                 .build();
-        if (registeredClassMember.getLastName().equalsIgnoreCase("golly")) {
-            return;
-        }
+
         classWhoIsInRepository.save(registeredClassMember);
     }
 
