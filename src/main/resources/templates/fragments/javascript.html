@@ -211,11 +211,10 @@
             });
         });
 
-        function getDots() {
-            let yourDate = new Date();
+        function getDots(date) {
 
             let dots = [];
-            let url = 'http://localhost:8080/api/clubs/WhoIsInCount/709/' + yourDate.toISOString().split('T')[0];
+            let url = 'http://localhost:8080/api/clubs/WhoIsInCount/709/' + date.toISOString().split('T')[0];
 
             fetch(url)
                 .then(res => res.json())
@@ -231,7 +230,8 @@
         }
 
         $('#chartContainer').each(function() {
-            getDots();
+            let date = new Date();
+            getDots(date);
         });
 
 
@@ -262,6 +262,24 @@
             chart.render();
 
         }
+
+        var counter = 0;
+
+        $("#SubtractDay").click(function() {
+            counter--;
+            var today = new Date();
+            today.setDate(today.getDate() + counter);
+            var formattedDate = new Date(today);
+            getDots(formattedDate);
+        });
+
+        $("#AddDay").click(function() {
+            counter++;
+            var today = new Date();
+            today.setDate(today.getDate() + counter);
+            var formattedDate = new Date(today);
+            getDots(formattedDate);
+        });
 
 
     </script>
