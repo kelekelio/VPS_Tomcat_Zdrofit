@@ -37,6 +37,7 @@ public class ClubWhoIsInCountService {
         UriComponents uri = UriComponentsBuilder.fromUriString(zdrofitAPI.getUrl())
                 .path(WHO_IS_IN_COUNT_URL)
                 .build().encode();
+        log.info("Outgoing request:   endpoint: {} {}", HttpMethod.GET, uri);
 
         ResponseEntity<ClubWhoIsInCountResponse> response = restTemplate.exchange(uri.toString(),
                 HttpMethod.GET,
@@ -58,7 +59,6 @@ public class ClubWhoIsInCountService {
                 .count(whoIsInCount.getCount())
                 .date(time)
                 .build();
-        System.out.println(logWhoIsIn.getClubId() + " => " + whoIsInCount.getCount());
 
         clubWhoIsInCountRepository.save(logWhoIsIn);
     }

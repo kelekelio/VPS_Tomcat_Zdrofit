@@ -223,7 +223,7 @@
                         data[i]['x'] = new Date(data[i]['x']);
                         dots.push(data);
                     }
-                    draw(data);
+                    draw(data, date);
                 })
                 .catch(err => { throw err });
 
@@ -235,14 +235,23 @@
         });
 
 
-        function draw(dots) {
-            console.log(dots);
+        function draw(dots, date) {
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
                 title:{
-                    text: "Club 709 Daily Load"
+                    text: "Club 709 Daily Load",
+
+                },
+                subtitles: [{
+                    text: date.toLocaleDateString("en-US", options),
+                    fontWeight: "normal"
+                }],
+                legend: {
+                    cursor: "pointer",
+                    itemclick: toggleDataSeries
                 },
                 axisY: {
                     title: "People",
@@ -252,6 +261,7 @@
                 },
                 data: [{
                     type: "splineArea",
+                    name: "Today"
                     color: "rgba(54,158,173,.7)",
                     markerSize: 5,
                     xValueFormatString: "YYYY",
@@ -261,23 +271,32 @@
             });
             chart.render();
 
+            function toggleDataSeries(e) {
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                chart.render();
+            }
+
         }
 
-        var counter = 0;
+        let counter = 0;
 
         $("#SubtractDay").click(function() {
             counter--;
-            var today = new Date();
+            let today = new Date();
             today.setDate(today.getDate() + counter);
-            var formattedDate = new Date(today);
+            let formattedDate = new Date(today);
             getDots(formattedDate);
         });
 
         $("#AddDay").click(function() {
             counter++;
-            var today = new Date();
+            let today = new Date();
             today.setDate(today.getDate() + counter);
-            var formattedDate = new Date(today);
+            let formattedDate = new Date(today);
             getDots(formattedDate);
         });
 
