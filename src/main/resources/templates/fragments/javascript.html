@@ -211,31 +211,45 @@
             });
         });
 
-        function getDots(date) {
-
-            let dots = [];
+        async function getToday(date, clubId) {
             let url = 'http://localhost:8080/api/clubs/WhoIsInCount/709/' + date.toISOString().split('T')[0];
+            let obj = await (await fetch(url)).json();
 
-            fetch(url)
-                .then(res => res.json())
-                .then((data) => {
-                    for (let i = 0; i < data.length; i++) {
-                        data[i]['x'] = new Date(data[i]['x']);
-                        dots.push(data);
-                    }
-                    draw(data, date);
-                })
-                .catch(err => { throw err });
+            return fixDate(obj);
+        }
 
+        async function getAverage(date, clubId) {
+            let url = 'http://localhost:8080/api/clubs/average/709/' + date.toISOString().split('T')[0];
+            let obj = await (await fetch(url)).json();
+
+            return fixDate(obj);
+        }
+
+        function fixDate(data) {
+            for (let i = 0; i < data.length; i++) {
+                data[i]['x'] = new Date(data[i]['x']);
+            }
+            return data;
         }
 
         $('#chartContainer').each(function() {
             let date = new Date();
-            getDots(date);
+            drawChart(date);
         });
 
+        function drawChart(date) {
+            let today;
+            let average;
+            (async () => {
+                today = await getToday(date);
+                average = await getAverage(date);
 
-        function draw(dots, date) {
+                draw(today, average, date);
+            })()
+        }
+
+
+        function draw(today, average, day) {
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
@@ -246,8 +260,7 @@
 
                 },
                 subtitles: [{
-                    text: date.toLocaleDateString("en-US", options),
-                    fontWeight: "normal"
+                    text: day.toLocaleDateString("en-US", options)
                 }],
                 legend: {
                     cursor: "pointer",
@@ -261,12 +274,23 @@
                 },
                 data: [{
                     type: "splineArea",
-                    name: "Today"
+                    name: "Today",
                     color: "rgba(54,158,173,.7)",
                     markerSize: 5,
-                    xValueFormatString: "YYYY",
+                    xValueFormatString: "HH:mm",
                     yValueFormatString: "#,##0.##",
-                    dataPoints: dots
+                    showInLegend: true,
+                    dataPoints: today
+                }, {
+                    type: "spline",
+                    name: "Average",
+                    color: "rgba(102, 0, 255,.7)",
+                    markerSize: 5,
+                    xValueFormatString: "HH:mm",
+                    yValueFormatString: "#,##0.##",
+                    showInLegend: true,
+                    visible: true,
+                    dataPoints: average
                 }]
             });
             chart.render();
@@ -289,7 +313,7 @@
             let today = new Date();
             today.setDate(today.getDate() + counter);
             let formattedDate = new Date(today);
-            getDots(formattedDate);
+            drawChart(formattedDate);
         });
 
         $("#AddDay").click(function() {
@@ -297,7 +321,7 @@
             let today = new Date();
             today.setDate(today.getDate() + counter);
             let formattedDate = new Date(today);
-            getDots(formattedDate);
+            drawChart(formattedDate);
         });
 
 

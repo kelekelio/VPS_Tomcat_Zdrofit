@@ -31,6 +31,7 @@ public class ClassService {
         UriComponents uri = UriComponentsBuilder.fromUriString(zdrofitAPI.getUrl())
                 .path(WHO_IS_IN_URL)
                 .build().encode();
+        log.info("Outgoing request:   endpoint: {} {}", HttpMethod.GET, uri);
 
         ResponseEntity<ClassWhoIsInResponse> response = restTemplate.exchange(uri.toString(),
                 HttpMethod.GET,
@@ -48,7 +49,6 @@ public class ClassService {
     }
 
     private void logClassWhoIsIn(LocalDateTime time, ClassWhoIsInDTO whoIsIn) {
-        System.out.println(whoIsIn.getId() + " => " + whoIsIn.getLastName());
         ClassWhoIsIn registeredClassMember = ClassWhoIsIn.builder()
                 .id(whoIsIn.getId())
                 .firstName(whoIsIn.getFirstName())

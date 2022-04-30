@@ -1,5 +1,7 @@
 package com.grzegorznowakowski.vps_tomcat_zdrofit.Club.controller;
 
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.Count;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ChartResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ClubCountResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.ClubWhoIsInCount;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.service.ClubService;
@@ -28,7 +30,17 @@ public class ClubController {
     }
 
     @GetMapping("/WhoIsInCount/{id}/{day}")
-    public List<ClubCountResponse> getAllById(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+    public List<Count> getAllById(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return clubService.listLogsForClubById(id, day);
+    }
+
+    @GetMapping("/average/{id}/{day}")
+    public List<Count> getAverageCount(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+        return clubService.getAverage(id, day);
+    }
+
+    @GetMapping("/count/average/{id}/{day}")
+    public ChartResponse getCountForClub(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+        return clubService.getAverageCountForClub(id, day);
     }
 }

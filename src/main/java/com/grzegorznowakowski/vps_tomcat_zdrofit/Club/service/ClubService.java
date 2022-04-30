@@ -1,5 +1,8 @@
 package com.grzegorznowakowski.vps_tomcat_zdrofit.Club.service;
 
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.Enum.ChartType;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.Count;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ChartResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ClubCountResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.ClubWhoIsInCount;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.repository.ClubWhoIsInCountRepository;
@@ -17,11 +20,25 @@ public class ClubService {
 
     private final ClubWhoIsInCountRepository clubWhoIsInCountRepository;
 
-    public List<ClubCountResponse> listLogsForClubById(Long id, LocalDate day) {
-        return createResponse(clubWhoIsInCountRepository.findAllForClubAndDay(id, day.atStartOfDay(), day.plusDays(1).atStartOfDay()));
+    public List<Count> listLogsForClubById(Long id, LocalDate day) {
+        return clubWhoIsInCountRepository.findAllForClubAndDay(id, day.atStartOfDay(), day.plusDays(1).atStartOfDay());
     }
 
-    private List<ClubCountResponse> createResponse(List<ClubWhoIsInCount> clubWhoIsInCounts) {
-        return ClubCountResponse.fromList(clubWhoIsInCounts);
+    public List<Count> getAverage(Long clubId, LocalDate day) {
+        return clubWhoIsInCountRepository.getAverageFor(clubId, day.atStartOfDay());
+    }
+
+    public ChartResponse getAverageCountForClub(Long clubId, LocalDate day) {
+        return ChartResponse.builder()
+                .name("Average")
+                .type(ChartType.SPLINE.type)
+                .markerSize(5)
+                .xValueFormatString("HH:mm")
+                .yValueFormatString("#,##0.##")
+                .color("rgba(102, 0, 255,.7)")
+                .showInLegend(Boolean.TRUE)
+                .visible(Boolean.TRUE)
+                .dataPoints(clubWhoIsInCountRepository.getAverageFor(clubId, day.atStartOfDay()))
+                .build();
     }
 }
