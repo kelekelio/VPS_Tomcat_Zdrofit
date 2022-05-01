@@ -9,6 +9,7 @@ import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.service.ClubService;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.service.ClubWhoIsInCountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,11 +36,13 @@ public class ClubController {
         return clubWhoIsInCountService.getAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/WhoIsInCount/{id}/{day}")
     public List<Count> getAllById(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return clubService.listLogsForClubById(id, day);
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/average/{id}/{day}")
     public List<Count> getAverageCount(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return clubService.getAverage(id, day);
