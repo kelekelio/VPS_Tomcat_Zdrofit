@@ -212,14 +212,14 @@
         });
 
         async function getToday(date, clubId) {
-            let url = '/api/clubs/WhoIsInCount/709/' + date.toISOString().split('T')[0];
+            let url = 'http://188.68.231.142:8080/api/clubs/WhoIsInCount/709/' + date.toISOString().split('T')[0];
             let obj = await (await fetch(url)).json();
 
             return fixDate(obj);
         }
 
         async function getAverage(date, clubId) {
-            let url = '/api/clubs/average/709/' + date.toISOString().split('T')[0];
+            let url = 'http://188.68.231.142:8080/api/clubs/average/709/' + date.toISOString().split('T')[0];
             let obj = await (await fetch(url)).json();
 
             return fixDate(obj);
