@@ -46,10 +46,10 @@ public class ClubController {
         return clubService.getAverage(id, day);
     }
 
-    @GetMapping("/count/average/{id}/{day}")
-    public ChartResponse getCountForClub(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
-        return clubService.getAverageCountForClub(id, day);
-    }
+//    @GetMapping("/count/average/{id}/{day}")
+//    public ChartResponse getCountForClub(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
+//        return clubService.getAverageCountForClub(id, day);
+//    }
 
     @GetMapping("/count/{id}/{day}")
     public List<CountResponse> getCountForClubAndDay(@PathVariable(name = "id") Long id,

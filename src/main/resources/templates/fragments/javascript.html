@@ -212,7 +212,7 @@
         });
 
         async function getToday(date, clubId) {
-            let url = '/api/clubs/WhoIsInCount/709/' + date.toISOString().split('T')[0];
+            let url = '/api/clubs/count/709/' + date.toISOString().split('T')[0];
             let obj = await (await fetch(url)).json();
 
             return fixDate(obj);
