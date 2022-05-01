@@ -4,7 +4,9 @@ import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.Enum.ChartType;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.Count;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ChartResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ClubCountResponse;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.Club;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.ClubWhoIsInCount;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.repository.ClubRepository;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.repository.ClubWhoIsInCountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,11 @@ import java.util.List;
 public class ClubService {
 
     private final ClubWhoIsInCountRepository clubWhoIsInCountRepository;
+    private final ClubRepository clubRepository;
+
+    public List<Club> listAllClubs() {
+        return clubRepository.findAll();
+    }
 
     public List<Count> listLogsForClubById(Long id, LocalDate day) {
         return clubWhoIsInCountRepository.findAllForClubAndDay(id, day.atStartOfDay(), day.plusDays(1).atStartOfDay());
@@ -28,6 +35,7 @@ public class ClubService {
         return clubWhoIsInCountRepository.getAverageFor(clubId, day.atStartOfDay());
     }
 
+    //todo decide
     public ChartResponse getAverageCountForClub(Long clubId, LocalDate day) {
         return ChartResponse.builder()
                 .name("Average")

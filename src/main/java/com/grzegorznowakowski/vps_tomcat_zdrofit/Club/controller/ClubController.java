@@ -3,6 +3,7 @@ package com.grzegorznowakowski.vps_tomcat_zdrofit.Club.controller;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.Count;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ChartResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ClubCountResponse;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.Club;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.ClubWhoIsInCount;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.service.ClubService;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.service.ClubWhoIsInCountService;
@@ -23,6 +24,11 @@ public class ClubController {
 
     private final ClubWhoIsInCountService clubWhoIsInCountService;
     private final ClubService clubService;
+
+    @GetMapping
+    public List<Club> getAll() {
+        return clubService.listAllClubs();
+    }
 
     @GetMapping("/WhoIsInCount/all")
     public List<ClubWhoIsInCount> getAllSaved() {
