@@ -200,10 +200,8 @@
         }
 
         $('#chartContainer').each(function() {
-            $.getJSON("/api/clubs/WhoIsInCount/709/2022-04-01", printData);
-
             let date = new Date();
-            //drawChart(date);
+            drawChart(date);
         });
 
         function drawChart(date) {
