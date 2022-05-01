@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public class ClubWhoIsInCountService {
     }
 
     private void saveWhoIsInCount(ResponseEntity<ClubWhoIsInCountResponse> response) {
-        LocalDateTime time = LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         Objects.requireNonNull(response.getBody()).getData().forEach(whoIsInCount -> logWhoIsIn(time, whoIsInCount));
     }
 

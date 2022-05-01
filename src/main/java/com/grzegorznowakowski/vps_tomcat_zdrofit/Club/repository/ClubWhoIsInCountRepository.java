@@ -25,4 +25,10 @@ public interface ClubWhoIsInCountRepository extends JpaRepository<ClubWhoIsInCou
             "GROUP BY x")
     List<Count> getAverageFor(Long clubId, LocalDateTime date);
 
+    @Query("select c from ClubWhoIsInCount c " +
+            "where c.clubId = :id " +
+            "and c.date >= :start " +
+            "and c.date < :end ")
+    List<ClubWhoIsInCount> findAllByClubIdAndDateBetween(Long id, LocalDateTime start, LocalDateTime end);
+
 }

@@ -3,9 +3,8 @@ package com.grzegorznowakowski.vps_tomcat_zdrofit.Club.service;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.Enum.ChartType;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.Count;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ChartResponse;
-import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.ClubCountResponse;
+import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.dto.CountResponse;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.Club;
-import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.entity.ClubWhoIsInCount;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.repository.ClubRepository;
 import com.grzegorznowakowski.vps_tomcat_zdrofit.Club.repository.ClubWhoIsInCountRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +27,9 @@ public class ClubService {
     }
 
     public List<Count> listLogsForClubById(Long id, LocalDate day) {
+        System.out.println(day);
+        System.out.println(day.atStartOfDay());
+        System.out.println(day.plusDays(1).atStartOfDay());
         return clubWhoIsInCountRepository.findAllForClubAndDay(id, day.atStartOfDay(), day.plusDays(1).atStartOfDay());
     }
 
@@ -50,5 +52,13 @@ public class ClubService {
                 .visible(Boolean.TRUE)
                 .dataPoints(clubWhoIsInCountRepository.getAverageFor(clubId, day.atStartOfDay()))
                 .build();
+    }
+
+    public List<CountResponse> getCountForClubAndDayAll(Long clubId, LocalDate day) {
+        System.out.println(day);
+        System.out.println(day.atStartOfDay());
+        System.out.println(day.plusDays(1).atStartOfDay());
+
+        return CountResponse.from(clubWhoIsInCountRepository.findAllByClubIdAndDateBetween(clubId, day.atStartOfDay(), day.plusDays(1).atStartOfDay()));
     }
 }
