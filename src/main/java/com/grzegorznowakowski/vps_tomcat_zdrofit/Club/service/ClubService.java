@@ -32,6 +32,8 @@ public class ClubService {
     }
 
     public List<Count> getAverage(Long clubId, LocalDate day) {
+        System.out.println(day);
+        System.out.println(day.atStartOfDay());
         return clubWhoIsInCountRepository.getAverageFor(clubId, day.atStartOfDay());
     }
 
