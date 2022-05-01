@@ -36,13 +36,11 @@ public class ClubController {
         return clubWhoIsInCountService.getAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/WhoIsInCount/{id}/{day}")
     public List<Count> getAllById(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return clubService.listLogsForClubById(id, day);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping("/average/{id}/{day}")
     public List<Count> getAverageCount(@PathVariable(name = "id") Long id, @PathVariable(name = "day") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate day) {
         return clubService.getAverage(id, day);
