@@ -114,43 +114,6 @@
         $('table#ajaxTable').each(function() {
             var source = "/classes/ajax";
             var DataTable = $(this).DataTable( {
-                "fnDrawCallback": function(){
-
-                    $('.tooltipzy').tooltipster({
-                        side: 'right',
-                        content: 'Loading...',
-                        animationDuration: 10,
-                        contentAsHTML: true,
-                        theme: ['aiontooltip'],
-                        // 'instance' is basically the tooltip. More details in the "Object-oriented Tooltipster" section.
-                        functionBefore: function(instance, helper) {
-
-
-                            var $origin = $(helper.origin),
-                                toolid = $origin.attr('tooltipid');
-                            toollang = $origin.attr('tooltiplang');
-                            toolcount = $origin.attr('tooltipcount');
-                            classic = $origin.attr('classic');
-
-
-                            // we set a variable so the data is only loaded once via Ajax, not every time the tooltip opens
-                            if ($origin.data('loaded') !== true) {
-
-                                $.get("/tooltip/" + toolid, function(data) {
-
-                                    // call the 'content' method to update the content of our tooltip with the returned data.
-                                    // note: this content update will trigger an update animation (see the updateAnimation option)
-                                    instance.content(data);
-
-                                    // to remember that the data has been loaded
-                                    $origin.data('loaded', true);
-                                });
-                            }
-                        }
-                    });
-
-
-                },
                 ajax: {
                     'url': source,
                     'type': 'GET',
@@ -212,14 +175,14 @@
         });
 
         async function getToday(date, clubId) {
-            let url = 'http://188.68.231.142:8080/api/clubs/WhoIsInCount/709/' + date.toISOString().split('T')[0];
+            let url = '/api/clubs/WhoIsInCount/709/' + date.toISOString().split('T')[0];
             let obj = await (await fetch(url)).json();
 
             return fixDate(obj);
         }
 
         async function getAverage(date, clubId) {
-            let url = 'http://188.68.231.142:8080/api/clubs/average/709/' + date.toISOString().split('T')[0];
+            let url = '/api/clubs/average/709/' + date.toISOString().split('T')[0];
             let obj = await (await fetch(url)).json();
 
             return fixDate(obj);
@@ -232,7 +195,13 @@
             return data;
         }
 
+        function printData(data) {
+            console.log(data);
+        }
+
         $('#chartContainer').each(function() {
+            $.getJSON("/api/clubs/WhoIsInCount/709/2022-05-01", printData);
+
             let date = new Date();
             drawChart(date);
         });
