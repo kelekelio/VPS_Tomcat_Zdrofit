@@ -27,15 +27,10 @@ public class ClubService {
     }
 
     public List<Count> listLogsForClubById(Long id, LocalDate day) {
-        System.out.println(day);
-        System.out.println(day.atStartOfDay());
-        System.out.println(day.plusDays(1).atStartOfDay());
         return clubWhoIsInCountRepository.findAllForClubAndDay(id, day.atStartOfDay(), day.plusDays(1).atStartOfDay());
     }
 
     public List<Count> getAverage(Long clubId, LocalDate day) {
-        System.out.println(day);
-        System.out.println(day.atStartOfDay());
         return clubWhoIsInCountRepository.getAverageFor(clubId, day.atStartOfDay());
     }
 
@@ -55,10 +50,6 @@ public class ClubService {
     }
 
     public List<CountResponse> getCountForClubAndDayAll(Long clubId, LocalDate day) {
-        System.out.println(day);
-        System.out.println(day.atStartOfDay());
-        System.out.println(day.plusDays(1).atStartOfDay());
-
         return CountResponse.from(clubWhoIsInCountRepository.findAllByClubIdAndDateBetween(clubId, day.atStartOfDay(), day.plusDays(1).atStartOfDay()));
     }
 }
